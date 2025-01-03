@@ -1,0 +1,27 @@
+services:
+  server:
+    build: .  # Dockerfile будет автоматически взят из текущей директории
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    restart: unless-stopped
+  db:
+    image: postgres:alpine
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    user: postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
