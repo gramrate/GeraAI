@@ -336,17 +336,7 @@ func DeleteInterestsTemplate(db *gorm.DB) fiber.Handler {
 	}
 }
 
-// GetAllInterestsTemplates retrieves all templates for the current user
-// @Summary Get All Interests Templates
-// @Description Retrieves a paginated list of all interests templates created by the user.
-// @Tags Interests Template
-// @Produce json
-// @Param offset query int false "Pagination offset (default: 0)"
-// @Success 200 {object} responses.GetAllInterestsTemplatesDTO "Successfully retrieved templates"
-// @Failure 400 {object} responses.ErrorResponse "Invalid token or offset"
-// @Failure 404 {object} responses.ErrorResponse "No templates found"
-// @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /interests/templates [get]
+// GetAllInterestsTemplates получает все задачи по ID
 func GetAllInterestsTemplates(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)

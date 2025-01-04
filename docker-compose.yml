@@ -16,7 +16,6 @@ services:
       - db-data:/var/lib/postgresql/data
     env_file:
       - .env
-    user: postgres
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s

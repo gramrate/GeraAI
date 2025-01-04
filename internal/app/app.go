@@ -8,6 +8,7 @@ import (
 	"gera-ai/internal/utils/taskGenerator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/swagger"
 	"gorm.io/gorm"
 	"log"
 )
@@ -52,6 +53,7 @@ func NewGeraApp() *GeraApp {
 
 	// map api routes and swagger
 	api := app.Group("/api")
+	app.Get("/swagger/*", swagger.HandlerDefault)
 	routes.SwaggerRouter(api)
 	routes.PingRouter(api)
 	routes.AuthRouter(api, db)
@@ -75,7 +77,7 @@ func Start(app *GeraApp) {
 // TODO Реализовать шаблоны вариантов
 // TODO проверить соответсвие валидации и бд
 // TODO реализовать получение истории генераций
-// TODO Загенерить сваггер
-
-// TODO протестить шаблон по условиям
+// TODO Убрать все коменты
+// TODO почему-то бд спамит что-то про root
+// TODO переписать эндпоинты в сваггере
 // TODO протестить генерацию

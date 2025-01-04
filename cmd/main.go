@@ -5,9 +5,7 @@ import (
 )
 
 func main() {
-	// create app
 	GeraApp := app.NewGeraApp()
 
-	// start app
 	app.Start(GeraApp)
 }

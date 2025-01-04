@@ -777,52 +777,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/interests/templates": {
-            "get": {
-                "description": "Retrieves a paginated list of all interests templates created by the user.",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Interests Template"
-                ],
-                "summary": "Get All Interests Templates",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Pagination offset (default: 0)",
-                        "name": "offset",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved templates",
-                        "schema": {
-                            "$ref": "#/definitions/responses.GetAllInterestsTemplatesDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or offset",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "No templates found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/ping": {
             "get": {
                 "description": "Returns a simple status response to verify the server is running.",
@@ -1522,17 +1476,6 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/responses.ConditionTemplateDTO"
-                    }
-                }
-            }
-        },
-        "responses.GetAllInterestsTemplatesDTO": {
-            "type": "object",
-            "properties": {
-                "task_templates": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/responses.InterestsTemplateDTO"
                     }
                 }
             }

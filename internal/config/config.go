@@ -22,11 +22,11 @@ type AppConfig struct {
 func InitConfig() {
 	Config = AppConfig{
 		DBConnectionString: dbURL.GetDbUrl(
-			env.GetEnv("DB_HOST", "db"),
-			env.GetEnv("DB_USER", "postgres"),
-			env.GetEnv("DB_PASSWORD", "postgres"),
-			env.GetEnv("DB_NAME", "geraai"),
-			env.GetEnv("DB_PORT", "5432")),
+			env.GetEnv("POSTGRES_HOST", ""),
+			env.GetEnv("POSTGRES_USER", ""),
+			env.GetEnv("POSTGRES_PASSWORD", ""),
+			env.GetEnv("POSTGRES_DB", ""),
+			env.GetEnv("POSTGRES_PORT", "")),
 		JWTSecret:     env.GetEnv("JWT_SECRET", ""),
 		JWTExpiration: time.Hour * 24 * 30,
 		ApiKey:        env.GetEnv("OPENAI_API_KEY", ""),

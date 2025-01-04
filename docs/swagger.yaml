@@ -281,13 +281,6 @@ definitions:
           $ref: '#/definitions/responses.ConditionTemplateDTO'
         type: array
     type: object
-  responses.GetAllInterestsTemplatesDTO:
-    properties:
-      task_templates:
-        items:
-          $ref: '#/definitions/responses.InterestsTemplateDTO'
-        type: array
-    type: object
   responses.GetAllTasksResponseDTO:
     properties:
       tasks:
@@ -859,37 +852,6 @@ paths:
           schema:
             $ref: '#/definitions/responses.ErrorResponse'
       summary: Get Interests Template
-      tags:
-      - Interests Template
-  /interests/templates:
-    get:
-      description: Retrieves a paginated list of all interests templates created by
-        the user.
-      parameters:
-      - description: 'Pagination offset (default: 0)'
-        in: query
-        name: offset
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Successfully retrieved templates
-          schema:
-            $ref: '#/definitions/responses.GetAllInterestsTemplatesDTO'
-        "400":
-          description: Invalid token or offset
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: No templates found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Get All Interests Templates
       tags:
       - Interests Template
   /ping:
