@@ -3,7 +3,7 @@ package requests
 type CreateTask struct {
 	Title     string `validate:"required,min=3,max=100"`
 	Condition string `validate:"required,max=2000"`
-	Answer    string `validate:"required,max=100"`
+	Answer    string `validate:"required,max=500"`
 }
 
 type GetTask struct {
@@ -14,7 +14,7 @@ type EditTask struct {
 	ID        uint   `validate:"required"`
 	Title     string `validate:"required,min=3,max=100"`
 	Condition string `validate:"required,max=2000"`
-	Answer    string `validate:"required,max=100"`
+	Answer    string `validate:"required,max=500"`
 }
 
 type DeleteTask struct {

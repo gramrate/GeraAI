@@ -12,7 +12,7 @@ type Task struct {
 	Author    User   `gorm:"foreignKey:AuthorID;references:id"`
 	Title     string `gorm:"type:varchar(100)"`
 	Condition string `gorm:"type:varchar(2000)"`
-	Answer    string `gorm:"type:varchar(100)"`
+	Answer    string `gorm:"type:varchar(500)"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time

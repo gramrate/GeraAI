@@ -10,7 +10,7 @@ type GenerationAnswersHistory struct {
 	UserID    uint
 	User      User   `gorm:"foreignKey:UserID;references:id"`
 	Condition string `gorm:"type:varchar(2000)"`
-	Answer    string `gorm:"type:varchar(100)"`
+	Answer    string `gorm:"type:varchar(500)"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
