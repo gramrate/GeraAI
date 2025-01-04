@@ -25,7 +25,7 @@ import (
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or JSON"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Database error"
-// @Router /tasks [post]
+// @Router /api/task/new [post]
 func CreateTask(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -95,7 +95,7 @@ func CreateTask(db *gorm.DB) fiber.Handler {
 // @Failure 403 {object} responses.ErrorResponse "Forbidden access"
 // @Failure 404 {object} responses.ErrorResponse "Task not found"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /tasks/{id} [get]
+// @Router /api/task/get/{id} [get]
 func GetTask(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -173,7 +173,7 @@ func GetTask(db *gorm.DB) fiber.Handler {
 // @Failure 404 {object} responses.ErrorResponse "Task not found"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Database error"
-// @Router /tasks [put]
+// @Router /api/task/edit [put]
 func EditTask(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -264,7 +264,7 @@ func EditTask(db *gorm.DB) fiber.Handler {
 // @Failure 403 {object} responses.ErrorResponse "Forbidden access"
 // @Failure 404 {object} responses.ErrorResponse "Task not found"
 // @Failure 500 {object} responses.ErrorResponse "Database error"
-// @Router /tasks [delete]
+// @Router /api/task/delete [delete]
 func DeleteTask(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -340,7 +340,7 @@ func DeleteTask(db *gorm.DB) fiber.Handler {
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or offset"
 // @Failure 404 {object} responses.ErrorResponse "No tasks found"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /tasks [get]
+// @Router /api/task/all [get]
 func GetAllTasks(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)

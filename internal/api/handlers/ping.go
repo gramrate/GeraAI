@@ -11,7 +11,7 @@ import (
 // @Tags Health
 // @Produce json
 // @Success 200 {object} responses.PingDTO "Server is running"
-// @Router /ping [get]
+// @Router /api/ping [get]
 func Ping() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		return c.Status(200).JSON(responses.PingDTO{

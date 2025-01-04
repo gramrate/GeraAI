@@ -27,7 +27,7 @@ import (
 // @Failure      404      {object}  responses.ErrorResponse
 // @Failure      422      {object}  responses.ValidationErrorResponse
 // @Failure      500      {object}  responses.ErrorResponse
-// @Router       /api/login [post]
+// @Router       /api/auth/login [post]
 func Login(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		data := requests.Login{}
@@ -95,7 +95,7 @@ func Login(db *gorm.DB) fiber.Handler {
 // @Failure      409      {object}  responses.ErrorResponse
 // @Failure      422      {object}  responses.ValidationErrorResponse
 // @Failure      500      {object}  responses.ErrorResponse
-// @Router       /api/register [post]
+// @Router       /api/auth/register [post]
 func Register(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		data := requests.Register{}

@@ -281,6 +281,13 @@ definitions:
           $ref: '#/definitions/responses.ConditionTemplateDTO'
         type: array
     type: object
+  responses.GetAllInterestsTemplatesDTO:
+    properties:
+      task_templates:
+        items:
+          $ref: '#/definitions/responses.InterestsTemplateDTO'
+        type: array
+    type: object
   responses.GetAllTasksResponseDTO:
     properties:
       tasks:
@@ -346,176 +353,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/condition-templates:
-    delete:
-      consumes:
-      - application/json
-      description: Deletes a specific condition template owned by the user
-      parameters:
-      - description: Condition template ID
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/requests.DeleteConditionTemplate'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/responses.DeleteConditionTemplateDTO'
-        "400":
-          description: Invalid token or request
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Delete a condition template by ID
-      tags:
-      - ConditionTemplate
-    get:
-      description: Retrieves all condition templates created by the current user with
-        pagination
-      parameters:
-      - description: 'Pagination offset (default: 0)'
-        in: query
-        name: offset
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/responses.GetAllConditionTemplatesDTO'
-        "400":
-          description: Invalid token or request
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Get all condition templates for the user
-      tags:
-      - ConditionTemplate
-    post:
-      consumes:
-      - application/json
-      description: Creates a condition template for the current user
-      parameters:
-      - description: Condition template data
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/requests.CreateConditionTemplate'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/responses.CreateConditionTemplateDTO'
-        "400":
-          description: Invalid token or request
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "422":
-          description: Validation errors
-          schema:
-            $ref: '#/definitions/responses.ValidationErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Create a new condition template
-      tags:
-      - ConditionTemplate
-    put:
-      consumes:
-      - application/json
-      description: Updates a condition template owned by the user
-      parameters:
-      - description: Condition template data
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/requests.EditConditionTemplate'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/responses.EditConditionTemplateDTO'
-        "400":
-          description: Invalid token or request
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "422":
-          description: Validation errors
-          schema:
-            $ref: '#/definitions/responses.ValidationErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Edit an existing condition template
-      tags:
-      - ConditionTemplate
-  /api/condition-templates/{id}:
-    get:
-      description: Retrieves a specific condition template owned by the user
-      parameters:
-      - description: Condition Template ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/responses.GetConditionTemplateDTO'
-        "400":
-          description: Invalid token or request
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Get a condition template by ID
-      tags:
-      - ConditionTemplate
-  /api/login:
+  /api/auth/login:
     post:
       consumes:
       - application/json
@@ -557,7 +395,7 @@ paths:
       summary: User Login
       tags:
       - Auth
-  /api/register:
+  /api/auth/register:
     post:
       consumes:
       - application/json
@@ -595,7 +433,7 @@ paths:
       summary: User Registration
       tags:
       - Auth
-  /generate/answer:
+  /api/generate/answer:
     post:
       consumes:
       - application/json
@@ -630,7 +468,7 @@ paths:
       summary: Generate Answer by Condition
       tags:
       - Answer Generation
-  /generate/interest:
+  /api/generate/interests:
     post:
       consumes:
       - application/json
@@ -665,7 +503,7 @@ paths:
       summary: Generate Task by Interests
       tags:
       - Task Generation
-  /generate/no-interest:
+  /api/generate/nointerests:
     post:
       consumes:
       - application/json
@@ -700,7 +538,410 @@ paths:
       summary: Generate Task Without Interests
       tags:
       - Task Generation
-  /interests/template:
+  /api/ping:
+    get:
+      description: Returns a simple status response to verify the server is running.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Server is running
+          schema:
+            $ref: '#/definitions/responses.PingDTO'
+      summary: Server Health Check
+      tags:
+      - Health
+  /api/task/all:
+    get:
+      description: Fetches all tasks created by the authenticated user with pagination
+      parameters:
+      - description: Pagination offset (default is 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tasks successfully retrieved
+          schema:
+            $ref: '#/definitions/responses.GetAllTasksResponseDTO'
+        "400":
+          description: Invalid token or offset
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: No tasks found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Retrieve all tasks
+      tags:
+      - Tasks
+  /api/task/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a specific task by its ID
+      parameters:
+      - description: Task deletion data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/requests.DeleteTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task successfully deleted
+          schema:
+            $ref: '#/definitions/responses.DeleteTaskResponseDTO'
+        "400":
+          description: Invalid token or JSON
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden access
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Task not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Database error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Delete a task
+      tags:
+      - Tasks
+  /api/task/edit:
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing task with new data
+      parameters:
+      - description: Task editing data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/requests.EditTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task successfully updated
+          schema:
+            $ref: '#/definitions/responses.EditTaskResponseDTO'
+        "400":
+          description: Invalid token or JSON
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden access
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Task not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "422":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/responses.ValidationErrorResponse'
+        "500":
+          description: Database error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Edit a task
+      tags:
+      - Tasks
+  /api/task/get/{id}:
+    get:
+      description: Fetches a specific task by its ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task successfully retrieved
+          schema:
+            $ref: '#/definitions/responses.GetTaskResponseDTO'
+        "400":
+          description: Invalid token or JSON
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden access
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Task not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Retrieve a task by ID
+      tags:
+      - Tasks
+  /api/task/new:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new task and saves it to the database
+      parameters:
+      - description: Task creation data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task successfully created
+          schema:
+            $ref: '#/definitions/responses.CreateTaskResponseDTO'
+        "400":
+          description: Invalid token or JSON
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "422":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/responses.ValidationErrorResponse'
+        "500":
+          description: Database error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Create a new task
+      tags:
+      - Tasks
+  /api/template/condition/all:
+    get:
+      description: Retrieves all condition templates created by the current user with
+        pagination
+      parameters:
+      - description: 'Pagination offset (default: 0)'
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetAllConditionTemplatesDTO'
+        "400":
+          description: Invalid token or request
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Get all condition templates for the user
+      tags:
+      - ConditionTemplate
+  /api/template/condition/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a specific condition template owned by the user
+      parameters:
+      - description: Condition template ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/requests.DeleteConditionTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.DeleteConditionTemplateDTO'
+        "400":
+          description: Invalid token or request
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Delete a condition template by ID
+      tags:
+      - ConditionTemplate
+  /api/template/condition/edit:
+    put:
+      consumes:
+      - application/json
+      description: Updates a condition template owned by the user
+      parameters:
+      - description: Condition template data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/requests.EditConditionTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.EditConditionTemplateDTO'
+        "400":
+          description: Invalid token or request
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "422":
+          description: Validation errors
+          schema:
+            $ref: '#/definitions/responses.ValidationErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Edit an existing condition template
+      tags:
+      - ConditionTemplate
+  /api/template/condition/get/{id}:
+    get:
+      description: Retrieves a specific condition template owned by the user
+      parameters:
+      - description: Condition Template ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.GetConditionTemplateDTO'
+        "400":
+          description: Invalid token or request
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Get a condition template by ID
+      tags:
+      - ConditionTemplate
+  /api/template/condition/new:
+    post:
+      consumes:
+      - application/json
+      description: Creates a condition template for the current user
+      parameters:
+      - description: Condition template data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateConditionTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.CreateConditionTemplateDTO'
+        "400":
+          description: Invalid token or request
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "422":
+          description: Validation errors
+          schema:
+            $ref: '#/definitions/responses.ValidationErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Create a new condition template
+      tags:
+      - ConditionTemplate
+  /api/template/interests/all:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all interest templates for a specific user, with pagination
+        support.
+      parameters:
+      - description: The page offset for pagination. Default is 0.
+        in: query
+        minimum: 0
+        name: offset
+        type: integer
+      - description: Bearer token for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved interest templates
+          schema:
+            $ref: '#/definitions/responses.GetAllInterestsTemplatesDTO'
+        "400":
+          description: Invalid token or offset
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "404":
+          description: No task templates found
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ErrorResponse'
+      summary: Get all interest templates by user ID
+      tags:
+      - InterestsTemplates
+  /api/template/interests/delete:
     delete:
       consumes:
       - application/json
@@ -743,40 +984,7 @@ paths:
       summary: Delete Interests Template
       tags:
       - Interests Template
-    post:
-      consumes:
-      - application/json
-      description: Creates a new template based on the provided title and list of
-        interests.
-      parameters:
-      - description: Template data
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/requests.CreateInterestsTemplate'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Successfully created template
-          schema:
-            $ref: '#/definitions/responses.CreateInterestsTemplateDTO'
-        "400":
-          description: Invalid token or JSON
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "422":
-          description: Validation error
-          schema:
-            $ref: '#/definitions/responses.ValidationErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Create Interests Template
-      tags:
-      - Interests Template
+  /api/template/interests/edit:
     put:
       consumes:
       - application/json
@@ -818,7 +1026,7 @@ paths:
       summary: Edit Interests Template
       tags:
       - Interests Template
-  /interests/template/{id}:
+  /api/template/interests/get/{id}:
     get:
       description: Fetches a specific interests template by its ID, provided the user
         is the author.
@@ -854,104 +1062,26 @@ paths:
       summary: Get Interests Template
       tags:
       - Interests Template
-  /ping:
-    get:
-      description: Returns a simple status response to verify the server is running.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Server is running
-          schema:
-            $ref: '#/definitions/responses.PingDTO'
-      summary: Server Health Check
-      tags:
-      - Health
-  /tasks:
-    delete:
-      consumes:
-      - application/json
-      description: Deletes a specific task by its ID
-      parameters:
-      - description: Task deletion data
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/requests.DeleteTask'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Task successfully deleted
-          schema:
-            $ref: '#/definitions/responses.DeleteTaskResponseDTO'
-        "400":
-          description: Invalid token or JSON
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden access
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Task not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Database error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Delete a task
-      tags:
-      - Tasks
-    get:
-      description: Fetches all tasks created by the authenticated user with pagination
-      parameters:
-      - description: Pagination offset (default is 0)
-        in: query
-        name: offset
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Tasks successfully retrieved
-          schema:
-            $ref: '#/definitions/responses.GetAllTasksResponseDTO'
-        "400":
-          description: Invalid token or offset
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: No tasks found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Retrieve all tasks
-      tags:
-      - Tasks
+  /api/template/interests/new:
     post:
       consumes:
       - application/json
-      description: Creates a new task and saves it to the database
+      description: Creates a new template based on the provided title and list of
+        interests.
       parameters:
-      - description: Task creation data
+      - description: Template data
         in: body
         name: input
         required: true
         schema:
-          $ref: '#/definitions/requests.CreateTask'
+          $ref: '#/definitions/requests.CreateInterestsTemplate'
       produces:
       - application/json
       responses:
         "200":
-          description: Task successfully created
+          description: Successfully created template
           schema:
-            $ref: '#/definitions/responses.CreateTaskResponseDTO'
+            $ref: '#/definitions/responses.CreateInterestsTemplateDTO'
         "400":
           description: Invalid token or JSON
           schema:
@@ -960,87 +1090,11 @@ paths:
           description: Validation error
           schema:
             $ref: '#/definitions/responses.ValidationErrorResponse'
-        "500":
-          description: Database error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Create a new task
-      tags:
-      - Tasks
-    put:
-      consumes:
-      - application/json
-      description: Updates an existing task with new data
-      parameters:
-      - description: Task editing data
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/requests.EditTask'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Task successfully updated
-          schema:
-            $ref: '#/definitions/responses.EditTaskResponseDTO'
-        "400":
-          description: Invalid token or JSON
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden access
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Task not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "422":
-          description: Validation error
-          schema:
-            $ref: '#/definitions/responses.ValidationErrorResponse'
-        "500":
-          description: Database error
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-      summary: Edit a task
-      tags:
-      - Tasks
-  /tasks/{id}:
-    get:
-      description: Fetches a specific task by its ID
-      parameters:
-      - description: Task ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Task successfully retrieved
-          schema:
-            $ref: '#/definitions/responses.GetTaskResponseDTO'
-        "400":
-          description: Invalid token or JSON
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "403":
-          description: Forbidden access
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
-        "404":
-          description: Task not found
-          schema:
-            $ref: '#/definitions/responses.ErrorResponse'
         "500":
           description: Internal server error
           schema:
             $ref: '#/definitions/responses.ErrorResponse'
-      summary: Retrieve a task by ID
+      summary: Create Interests Template
       tags:
-      - Tasks
+      - Interests Template
 swagger: "2.0"

@@ -12,7 +12,7 @@ import (
 func AIGeneratorRouter(app fiber.Router, db *gorm.DB, tg *taskGenerator.TaskGenerator) {
 	jwt := middlewares.AuthMiddleware(config.Config.JWTSecret)
 
-	app.Post("/generate/byinterests", jwt, handlers.GenerateTaskByInterest(db, tg))
-	app.Post("/generate/bynointerests", jwt, handlers.GenerateTaskByNoInterest(db, tg))
+	app.Post("/generate/interests", jwt, handlers.GenerateTaskByInterest(db, tg))
+	app.Post("/generate/nointerests", jwt, handlers.GenerateTaskByNoInterest(db, tg))
 	app.Post("/generate/answer", jwt, handlers.GenerateAnswer(db, tg))
 }

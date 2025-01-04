@@ -15,262 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/condition-templates": {
-            "get": {
-                "description": "Retrieves all condition templates created by the current user with pagination",
-                "tags": [
-                    "ConditionTemplate"
-                ],
-                "summary": "Get all condition templates for the user",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Pagination offset (default: 0)",
-                        "name": "offset",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/responses.GetAllConditionTemplatesDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Updates a condition template owned by the user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ConditionTemplate"
-                ],
-                "summary": "Edit an existing condition template",
-                "parameters": [
-                    {
-                        "description": "Condition template data",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.EditConditionTemplate"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/responses.EditConditionTemplateDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ValidationErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Creates a condition template for the current user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ConditionTemplate"
-                ],
-                "summary": "Create a new condition template",
-                "parameters": [
-                    {
-                        "description": "Condition template data",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.CreateConditionTemplate"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/responses.CreateConditionTemplateDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ValidationErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Deletes a specific condition template owned by the user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ConditionTemplate"
-                ],
-                "summary": "Delete a condition template by ID",
-                "parameters": [
-                    {
-                        "description": "Condition template ID",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.DeleteConditionTemplate"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/responses.DeleteConditionTemplateDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/condition-templates/{id}": {
-            "get": {
-                "description": "Retrieves a specific condition template owned by the user",
-                "tags": [
-                    "ConditionTemplate"
-                ],
-                "summary": "Get a condition template by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Condition Template ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/responses.GetConditionTemplateDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/login": {
+        "/api/auth/login": {
             "post": {
                 "description": "Authenticate user and return JWT token",
                 "consumes": [
@@ -334,7 +79,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/register": {
+        "/api/auth/register": {
             "post": {
                 "description": "Register a new user and return JWT token",
                 "consumes": [
@@ -392,7 +137,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/generate/answer": {
+        "/api/generate/answer": {
             "post": {
                 "description": "Generates an answer based on the provided condition and saves it in history.",
                 "consumes": [
@@ -444,7 +189,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/generate/interest": {
+        "/api/generate/interests": {
             "post": {
                 "description": "Generates a task based on the provided list of interests and saves it in the history.",
                 "consumes": [
@@ -496,7 +241,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/generate/no-interest": {
+        "/api/generate/nointerests": {
             "post": {
                 "description": "Generates a task based solely on the provided condition and saves it in history.",
                 "consumes": [
@@ -548,9 +293,75 @@ const docTemplate = `{
                 }
             }
         },
-        "/interests/template": {
-            "put": {
-                "description": "Updates the title or list of interests of an existing template.",
+        "/api/ping": {
+            "get": {
+                "description": "Returns a simple status response to verify the server is running.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Server Health Check",
+                "responses": {
+                    "200": {
+                        "description": "Server is running",
+                        "schema": {
+                            "$ref": "#/definitions/responses.PingDTO"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/all": {
+            "get": {
+                "description": "Fetches all tasks created by the authenticated user with pagination",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Retrieve all tasks",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Pagination offset (default is 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tasks successfully retrieved",
+                        "schema": {
+                            "$ref": "#/definitions/responses.GetAllTasksResponseDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or offset",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No tasks found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/delete": {
+            "delete": {
+                "description": "Deletes a specific task by its ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -558,25 +369,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Interests Template"
+                    "Tasks"
                 ],
-                "summary": "Edit Interests Template",
+                "summary": "Delete a task",
                 "parameters": [
                     {
-                        "description": "Updated template data",
+                        "description": "Task deletion data",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.EditInterestsTemplate"
+                            "$ref": "#/definitions/requests.DeleteTask"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully updated template",
+                        "description": "Task successfully deleted",
                         "schema": {
-                            "$ref": "#/definitions/responses.EditInterestsTemplateDTO"
+                            "$ref": "#/definitions/responses.DeleteTaskResponseDTO"
                         }
                     },
                     "400": {
@@ -586,13 +397,71 @@ const docTemplate = `{
                         }
                     },
                     "403": {
-                        "description": "Access forbidden",
+                        "description": "Forbidden access",
                         "schema": {
                             "$ref": "#/definitions/responses.ErrorResponse"
                         }
                     },
                     "404": {
-                        "description": "Template not found",
+                        "description": "Task not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Database error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/edit": {
+            "put": {
+                "description": "Updates an existing task with new data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Edit a task",
+                "parameters": [
+                    {
+                        "description": "Task editing data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.EditTask"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task successfully updated",
+                        "schema": {
+                            "$ref": "#/definitions/responses.EditTaskResponseDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or JSON",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden access",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
                         "schema": {
                             "$ref": "#/definitions/responses.ErrorResponse"
                         }
@@ -604,15 +473,70 @@ const docTemplate = `{
                         }
                     },
                     "500": {
+                        "description": "Database error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/get/{id}": {
+            "get": {
+                "description": "Fetches a specific task by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Retrieve a task by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task successfully retrieved",
+                        "schema": {
+                            "$ref": "#/definitions/responses.GetTaskResponseDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or JSON",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden access",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
                         "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/responses.ErrorResponse"
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/task/new": {
             "post": {
-                "description": "Creates a new template based on the provided title and list of interests.",
+                "description": "Creates a new task and saves it to the database",
                 "consumes": [
                     "application/json"
                 ],
@@ -620,25 +544,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Interests Template"
+                    "Tasks"
                 ],
-                "summary": "Create Interests Template",
+                "summary": "Create a new task",
                 "parameters": [
                     {
-                        "description": "Template data",
+                        "description": "Task creation data",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.CreateInterestsTemplate"
+                            "$ref": "#/definitions/requests.CreateTask"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully created template",
+                        "description": "Task successfully created",
                         "schema": {
-                            "$ref": "#/definitions/responses.CreateInterestsTemplateDTO"
+                            "$ref": "#/definitions/responses.CreateTaskResponseDTO"
                         }
                     },
                     "400": {
@@ -654,13 +578,333 @@ const docTemplate = `{
                         }
                     },
                     "500": {
+                        "description": "Database error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/condition/all": {
+            "get": {
+                "description": "Retrieves all condition templates created by the current user with pagination",
+                "tags": [
+                    "ConditionTemplate"
+                ],
+                "summary": "Get all condition templates for the user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Pagination offset (default: 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.GetAllConditionTemplatesDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
                         "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/responses.ErrorResponse"
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/template/condition/delete": {
+            "delete": {
+                "description": "Deletes a specific condition template owned by the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ConditionTemplate"
+                ],
+                "summary": "Delete a condition template by ID",
+                "parameters": [
+                    {
+                        "description": "Condition template ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.DeleteConditionTemplate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.DeleteConditionTemplateDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/condition/edit": {
+            "put": {
+                "description": "Updates a condition template owned by the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ConditionTemplate"
+                ],
+                "summary": "Edit an existing condition template",
+                "parameters": [
+                    {
+                        "description": "Condition template data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.EditConditionTemplate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.EditConditionTemplateDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ValidationErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/condition/get/{id}": {
+            "get": {
+                "description": "Retrieves a specific condition template owned by the user",
+                "tags": [
+                    "ConditionTemplate"
+                ],
+                "summary": "Get a condition template by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Condition Template ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.GetConditionTemplateDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/condition/new": {
+            "post": {
+                "description": "Creates a condition template for the current user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ConditionTemplate"
+                ],
+                "summary": "Create a new condition template",
+                "parameters": [
+                    {
+                        "description": "Condition template data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.CreateConditionTemplate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.CreateConditionTemplateDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ValidationErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/interests/all": {
+            "get": {
+                "description": "Retrieves all interest templates for a specific user, with pagination support.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InterestsTemplates"
+                ],
+                "summary": "Get all interest templates by user ID",
+                "parameters": [
+                    {
+                        "minimum": 0,
+                        "type": "integer",
+                        "description": "The page offset for pagination. Default is 0.",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer token for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved interest templates",
+                        "schema": {
+                            "$ref": "#/definitions/responses.GetAllInterestsTemplatesDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or offset",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No task templates found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/interests/delete": {
             "delete": {
                 "description": "Deletes a specific interests template, provided the user is the author.",
                 "consumes": [
@@ -724,7 +968,71 @@ const docTemplate = `{
                 }
             }
         },
-        "/interests/template/{id}": {
+        "/api/template/interests/edit": {
+            "put": {
+                "description": "Updates the title or list of interests of an existing template.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Interests Template"
+                ],
+                "summary": "Edit Interests Template",
+                "parameters": [
+                    {
+                        "description": "Updated template data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.EditInterestsTemplate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated template",
+                        "schema": {
+                            "$ref": "#/definitions/responses.EditInterestsTemplateDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or JSON",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Access forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Template not found",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ValidationErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/template/interests/get/{id}": {
             "get": {
                 "description": "Fetches a specific interests template by its ID, provided the user is the author.",
                 "produces": [
@@ -777,135 +1085,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/ping": {
-            "get": {
-                "description": "Returns a simple status response to verify the server is running.",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Health"
-                ],
-                "summary": "Server Health Check",
-                "responses": {
-                    "200": {
-                        "description": "Server is running",
-                        "schema": {
-                            "$ref": "#/definitions/responses.PingDTO"
-                        }
-                    }
-                }
-            }
-        },
-        "/tasks": {
-            "get": {
-                "description": "Fetches all tasks created by the authenticated user with pagination",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Retrieve all tasks",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Pagination offset (default is 0)",
-                        "name": "offset",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tasks successfully retrieved",
-                        "schema": {
-                            "$ref": "#/definitions/responses.GetAllTasksResponseDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or offset",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "No tasks found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Updates an existing task with new data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Edit a task",
-                "parameters": [
-                    {
-                        "description": "Task editing data",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.EditTask"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Task successfully updated",
-                        "schema": {
-                            "$ref": "#/definitions/responses.EditTaskResponseDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or JSON",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden access",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ValidationErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Database error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
+        "/api/template/interests/new": {
             "post": {
-                "description": "Creates a new task and saves it to the database",
+                "description": "Creates a new template based on the provided title and list of interests.",
                 "consumes": [
                     "application/json"
                 ],
@@ -913,25 +1095,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tasks"
+                    "Interests Template"
                 ],
-                "summary": "Create a new task",
+                "summary": "Create Interests Template",
                 "parameters": [
                     {
-                        "description": "Task creation data",
+                        "description": "Template data",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.CreateTask"
+                            "$ref": "#/definitions/requests.CreateInterestsTemplate"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task successfully created",
+                        "description": "Successfully created template",
                         "schema": {
-                            "$ref": "#/definitions/responses.CreateTaskResponseDTO"
+                            "$ref": "#/definitions/responses.CreateInterestsTemplateDTO"
                         }
                     },
                     "400": {
@@ -944,115 +1126,6 @@ const docTemplate = `{
                         "description": "Validation error",
                         "schema": {
                             "$ref": "#/definitions/responses.ValidationErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Database error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Deletes a specific task by its ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Delete a task",
-                "parameters": [
-                    {
-                        "description": "Task deletion data",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.DeleteTask"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Task successfully deleted",
-                        "schema": {
-                            "$ref": "#/definitions/responses.DeleteTaskResponseDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or JSON",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden access",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Database error",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/tasks/{id}": {
-            "get": {
-                "description": "Fetches a specific task by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Retrieve a task by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Task ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Task successfully retrieved",
-                        "schema": {
-                            "$ref": "#/definitions/responses.GetTaskResponseDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or JSON",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden access",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "schema": {
-                            "$ref": "#/definitions/responses.ErrorResponse"
                         }
                     },
                     "500": {
@@ -1476,6 +1549,17 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/responses.ConditionTemplateDTO"
+                    }
+                }
+            }
+        },
+        "responses.GetAllInterestsTemplatesDTO": {
+            "type": "object",
+            "properties": {
+                "task_templates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/responses.InterestsTemplateDTO"
                     }
                 }
             }

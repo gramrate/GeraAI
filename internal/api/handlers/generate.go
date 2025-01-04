@@ -24,7 +24,7 @@ import (
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or JSON"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Error saving the generated task"
-// @Router /generate/interest [post]
+// @Router /api/generate/interests [post]
 func GenerateTaskByInterest(db *gorm.DB, tg *taskGenerator.TaskGenerator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Извлекаем информацию о пользователе из JWT
@@ -107,7 +107,7 @@ func GenerateTaskByInterest(db *gorm.DB, tg *taskGenerator.TaskGenerator) fiber.
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or JSON"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Error saving the generated task"
-// @Router /generate/no-interest [post]
+// @Router /api/generate/nointerests [post]
 func GenerateTaskByNoInterest(db *gorm.DB, tg *taskGenerator.TaskGenerator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Извлекаем информацию о пользователе из JWT
@@ -179,7 +179,7 @@ func GenerateTaskByNoInterest(db *gorm.DB, tg *taskGenerator.TaskGenerator) fibe
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or JSON"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Error saving the generated answer"
-// @Router /generate/answer [post]
+// @Router /api/generate/answer [post]
 func GenerateAnswer(db *gorm.DB, tg *taskGenerator.TaskGenerator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Извлекаем информацию о пользователе из JWT

@@ -25,7 +25,7 @@ import (
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or JSON"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /interests/template [post]
+// @Router /api/template/interests/new [post]
 func CreateInterestsTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -105,7 +105,7 @@ func CreateInterestsTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 403 {object} responses.ErrorResponse "Access forbidden"
 // @Failure 404 {object} responses.ErrorResponse "Template not found"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /interests/template/{id} [get]
+// @Router /api/template/interests/get/{id} [get]
 func GetInterestsTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -175,7 +175,7 @@ func GetInterestsTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 404 {object} responses.ErrorResponse "Template not found"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /interests/template [put]
+// @Router /api/template/interests/edit [put]
 func EditInterestsTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -275,7 +275,7 @@ func EditInterestsTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 404 {object} responses.ErrorResponse "Template not found"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation error"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /interests/template [delete]
+// @Router /api/template/interests/delete [delete]
 func DeleteInterestsTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -336,7 +336,19 @@ func DeleteInterestsTemplate(db *gorm.DB) fiber.Handler {
 	}
 }
 
-// GetAllInterestsTemplates получает все задачи по ID
+// GetAllInterestsTemplates retrieves all interest templates by user ID.
+// @Summary Get all interest templates by user ID
+// @Description Retrieves all interest templates for a specific user, with pagination support.
+// @Tags InterestsTemplates
+// @Accept json
+// @Produce json
+// @Param offset query int false "The page offset for pagination. Default is 0." minimum(0)
+// @Param Authorization header string true "Bearer token for authentication"
+// @Success 200 {object} responses.GetAllInterestsTemplatesDTO "Successfully retrieved interest templates"
+// @Failure 400 {object} responses.ErrorResponse "Invalid token or offset"
+// @Failure 404 {object} responses.ErrorResponse "No task templates found"
+// @Failure 500 {object} responses.ErrorResponse "Internal server error"
+// @Router /api/template/interests/all [get]
 func GetAllInterestsTemplates(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)

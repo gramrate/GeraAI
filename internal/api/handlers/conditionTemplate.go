@@ -23,7 +23,7 @@ import (
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or request"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation errors"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /api/condition-templates [post]
+// @Router /api/template/condition/new [post]
 func CreateConditionTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -86,7 +86,7 @@ func CreateConditionTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 403 {object} responses.ErrorResponse "Forbidden"
 // @Failure 404 {object} responses.ErrorResponse "Not found"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /api/condition-templates/{id} [get]
+// @Router /api/template/condition/get/{id} [get]
 func GetConditionTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -148,7 +148,7 @@ func GetConditionTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 404 {object} responses.ErrorResponse "Not found"
 // @Failure 422 {object} responses.ValidationErrorResponse "Validation errors"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /api/condition-templates [put]
+// @Router /api/template/condition/edit [put]
 func EditConditionTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -230,7 +230,7 @@ func EditConditionTemplate(db *gorm.DB) fiber.Handler {
 // @Failure 403 {object} responses.ErrorResponse "Forbidden"
 // @Failure 404 {object} responses.ErrorResponse "Not found"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /api/condition-templates [delete]
+// @Router /api/template/condition/delete [delete]
 func DeleteConditionTemplate(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
@@ -299,7 +299,7 @@ func DeleteConditionTemplate(db *gorm.DB) fiber.Handler {
 // @Success 200 {object} responses.GetAllConditionTemplatesDTO
 // @Failure 400 {object} responses.ErrorResponse "Invalid token or request"
 // @Failure 500 {object} responses.ErrorResponse "Internal server error"
-// @Router /api/condition-templates [get]
+// @Router /api/template/condition/all [get]
 func GetAllConditionTemplates(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		authorID, err := jwtUtils.ExtractUserID(c)
