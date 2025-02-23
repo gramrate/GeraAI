@@ -8,6 +8,7 @@ import (
 	"gera-ai/internal/utils/taskGenerator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
 	"gorm.io/gorm"
 	"log"
@@ -50,6 +51,7 @@ func NewGeraApp() *GeraApp {
 	app := fiber.New()
 
 	app.Use(cors.New())
+	app.Use(logger.New())
 
 	// map api routes and swagger
 	api := app.Group("/api")

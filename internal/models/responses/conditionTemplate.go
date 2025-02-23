@@ -1,7 +1,5 @@
 package responses
 
-// DTOs for condition templates
-
 type ConditionTemplateDTO struct {
 	ID        uint   `json:"id"`
 	Title     string `json:"title"`
