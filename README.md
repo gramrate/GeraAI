@@ -12,27 +12,23 @@ Example generation:
 
 Condition:
 
-```
-2 sulfur oxide 4 + oxygen = 2 sulfur oxide 6
-how much sulfur oxide 4 should be taken if 76 grams of sulfur oxide 6 is taken
-and the yield is 80%.
-```
+> 2 sulfur oxide 4 + oxygen = 2 sulfur oxide 6
+> how much sulfur oxide 4 should be taken if 76 grams of sulfur oxide 6 is taken
+> and the yield is 80%.
+
 
 Interests:
 
-```
-Chemistry
-Biology
-```
+- Chemistry
+- Biology
+
 
 Result:
-```
-An excited biology chemist studying the effects of various oxides on the growth of mutant tomatoes takes up his new experiment. Muttering under his breath that “a nation of tomatoes will soon lead the world,” he decides to use sulfur oxide 6 in his experiments.
 
-Well, he begins his transformations, turning 76 grams of sulfur oxide 6. But he is a biological chemist, not a mathematical chemist, so it is difficult for him to calculate how much sulfur oxide 4 he would need to get the desired amount of sulfur oxide 6, given that the chemical reaction occurs in 80% yield. He knew that 2 molecules of sulfur oxide 4 would turn into 2 molecules of sulfur oxide 6 in a reaction with oxygen, but how much weight this would result in, he had no way of knowing.
+>An excited biology chemist studying the effects of various oxides on the growth of mutant tomatoes takes up his new experiment. Muttering under his breath that “a nation of tomatoes will soon lead the world,” he decides to use sulfur oxide 6 in his experiments. 
+> Well, he begins his transformations, turning 76 grams of sulfur oxide 6. But he is a biological chemist, not a mathematical chemist, so it is difficult for him to calculate how much sulfur oxide 4 he would need to get the desired amount of sulfur oxide 6, given that the chemical reaction occurs in 80% yield. He knew that 2 molecules of sulfur oxide 4 would turn into 2 molecules of sulfur oxide 6 in a reaction with oxygen, but how much weight this would result in, he had no way of knowing. 
+> “Eh, there, in the theory of genetic engineering, everything is simple...” - said the scientist thoughtfully, staring at his calculations. A task, oh, glory to science, he leaves to you.+
 
-“Eh, there, in the theory of genetic engineering, everything is simple...” - said the scientist thoughtfully, staring at his calculations. A task, oh, glory to science, he leaves to you.+
-```
 You can try everything yourself if you specify your token and proxy (when running from countries where openai does not work).
 
 ---
